@@ -131,7 +131,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
 
   check(string.match(url, "^([hH][tT][tT][pP][sS]?://[^/]+)")..'/robots.txt')
   
-  if status_code ~= 404 and ((goodurls[url] == true and string.match(url, 'aaai%.org')) or seeds[url] == true or secondseeds[url] == true or thirdseeds[url] == true) then
+  if status_code ~= 404 and ((goodurls[url] == true and string.match(url, 'aaai%.org')) or seeds[url] == true or secondseeds[url] == true) then
     html = read_file(file)
     for newurl in string.gmatch(html, '([^"]+)') do
       checknewurl(newurl)

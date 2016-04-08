@@ -56,7 +56,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20160408.01"
+VERSION = "20160409.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'citeseerxpdf'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -172,7 +172,7 @@ class WgetArgs(object):
             "--truncate-output",
             "-e", "robots=off",
             "--rotate-dns",
-            "--recursive", "--level=2",
+            "--recursive", "--level=1",
             "--no-parent",
             "--page-requisites",
             "--timeout", "30",
@@ -195,7 +195,6 @@ class WgetArgs(object):
         assert item_type in ('100urls')
         
         if item_type == '100urls':
-            urls = []
             urllist = requests.get('http://storage.harrycross.me/dev/items/pdf_' + item_value)
             if urllist.status_code == 200:
                 for line in urllist.text.splitlines():
