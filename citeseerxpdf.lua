@@ -105,7 +105,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         check(string.match(url, "^([hH][tT][tT][pP][sS]?://.+)")..string.match(newurl, "^%.(/.+)"))
       end
     elseif string.match(newurl, "^//") then
-      check("http:"..newurl)
+      check(string.match(url, "^([hH][tT][tT][pP][sS]?:)")..newurl)
     elseif string.match(newurl, "^/") then
       check(string.match(url, "^([hH][tT][tT][pP][sS]?://[^/]+)")..newurl)
     elseif string.match(newurl, "^%.%./") then
@@ -166,21 +166,18 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. ".  \n")
   io.stdout:flush()
 
+  if downloaded[url["url"]] == true and status_code >= 200 and status_code <= 210 then
+    return wget.actions.EXIT
+  end
+
+  downloaded[url["url"]] = true
+
   if string.gsub(".", "%.", "%%%.") ~= "%." then
     return wget.actions.ABORT
   end
-
-  if (status_code >= 200 and status_code <= 399) then
-    if string.match(url.url, "https://") then
-      local newurl = string.gsub(url.url, "https://", "http://")
-      downloaded[newurl] = true
-    else
-      downloaded[url.url] = true
-    end
-  end
   
   if status_code >= 500 or
-    (status_code >= 400 and status_code ~= 400 and status_code ~= 403 and status_code ~= 404) or
+    (status_code >= 401 and status_code ~= 403 and status_code ~= 404) or
     status_code == 0 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
