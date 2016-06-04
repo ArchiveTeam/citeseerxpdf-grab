@@ -35,7 +35,7 @@ if StrictVersion(seesaw.__version__) < StrictVersion("0.8.5"):
 # 2. prints the required version string
 WGET_LUA = find_executable(
     "Wget+Lua",
-    ["GNU Wget 1.14.lua.20130523-9a5c"],
+    ["GNU Wget 1.14.lua.20130523-9a5c", "GNU Wget 1.14.lua.20160530-955376b"],
     [
         "./wget-lua",
         "./wget-lua-warrior",
@@ -56,7 +56,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20160410.01"
+VERSION = "20160605.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'citeseerxpdf'
 TRACKER_HOST = 'tracker.archiveteam.org'
